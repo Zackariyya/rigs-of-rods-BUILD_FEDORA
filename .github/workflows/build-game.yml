@@ -6,7 +6,7 @@ on: [ push, pull_request ]
 jobs:
   build-gcc:
     name: Linux build on Ubuntu
-    runs-on: ubuntu-latest
+    runs-on: fedora-latest
     steps:
       - uses: actions/checkout@v4
         with:
@@ -15,14 +15,14 @@ jobs:
       - name: Cache conan
         uses: actions/cache@v3
         with:
-          key: conan-ubuntu-${{ hashFiles('conanfile.py') }}
+          key: conan-fedora-${{ hashFiles('conanfile.py') }}
           path: ~/.conan2/
 
       - name: Install dependencies
         run: |
           curl "https://raw.githubusercontent.com/AnotherFoxGuy/ci-scripts/main/install-conan.sh" | sudo bash
-          sudo apt-get update
-          sudo apt-get -y install \
+          sudo dnf update
+          sudo dnf -y install \
                   pkg-config \
                   ninja-build \
                   nvidia-cg-toolkit \
